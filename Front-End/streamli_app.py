@@ -8,6 +8,9 @@ project_root = os.path.abspath(
 sys.path.append(project_root)
 
 import streamlit as st
+import pandas as pd
+import plotly.express as px
+
 from BackEnd.log_analyzer import (
     analyze_logs,
     brute_force_detection
@@ -46,6 +49,103 @@ if module == "Dashboard":
     col2.metric("Logs Analyzed", "1,204")
     col3.metric("Network Status", "Secure")
 
+    st.divider()
+
+ 
+    #Threat Trend Data
+    threat_data =pd.DataFrame ({
+        "Day": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+        "Threats Detected": [2, 5, 3, 8, 4, 6, 3]
+
+    })
+
+    st.subheader("Threat Activity Trend")
+
+    line_chart = px.line(
+        threat_data,
+        x="Day",
+        y="Threats Detected",
+        markers=True
+
+    )
+    st.plotly_chart(
+        line_chart,
+        use_container_width=True
+    )
+
+    line_chart.update_layout(
+        title="Weekly Threat Activity",
+        xaxis_title="Day ",
+        yaxis_title=" Threats Counts"
+    )
+
+    threat_types =pd.DataFrame ({
+        "Threat":[
+            "Failed Login",
+            "Brute Force",
+            "Invalid Password",
+            "Authentication Failure",
+
+        ],
+        "Count":[
+            12,
+            4,
+            8,
+            6
+        ]
+    })
+
+    pie_chart = px.pie(
+        threat_types,
+        names="Threat",
+        values="Count"
+        
+    )
+   
+    st.plotly_chart(
+        pie_chart,
+        use_container_width=True
+    )
+    
+    pie_chart.update_layout(
+        title="Threat Type Distribution" 
+  )
+    
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("Threat Activity Trend")
+        st.plotly_chart(line_chart, width="stretch")
+
+    with col2:
+        st.subheader("Threat Type Distribution")
+        st.plotly_chart(pie_chart, width="stretch")
+
+        
+    #Risk Distribution Chart
+    risk_data = pd.DataFrame({
+        "Risk": ["Low", "Medium", "High"],
+        "Count": [15, 8, 3]
+
+    })
+
+    st.subheader("Risk Distribution")
+
+    bar_chart = px.bar(
+        risk_data,
+        x="Risk",
+        y="Count"
+           
+    )
+    st.plotly_chart(
+        bar_chart,
+        use_container_width=True
+    )
+    bar_chart.update_layout(
+        title="Risk Level Distribution"
+        
+    )
 elif module == "Threat Intelligence":
     st.header("Threat Intelligence")
     st.write("Monitor cybersecurity threats and indicators.")
