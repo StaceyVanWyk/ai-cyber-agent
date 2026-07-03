@@ -1,0 +1,20 @@
+Day 1
+Install Ollama
+
+Run Llama 3 locally
+
+Day 2
+Build a simple chat interface
+
+Day 3 
+Connect Ai to log files
+
+Day 4
+Build a log analyzer
+
+Day 5
+Create Streamlit dashboard
+
+Day 6
+Generate Pdf incident reports
+
