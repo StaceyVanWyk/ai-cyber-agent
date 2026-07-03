@@ -54,7 +54,7 @@ elif module == "Log Analysis":
         type=["txt", "log"]
     )
 
-    if uploaded_file:
+    if uploaded_file is not None:
         log_content = uploaded_file.read().decode("utf-8")
         
 
