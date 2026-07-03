@@ -1,4 +1,14 @@
+import sys
+import os
+
+project_root = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..")
+)
+
+sys.path.append(project_root)
+
 import streamlit as st
+from BackEnd.log_analyzer import analyze_logs
 
 st.set_page_config(
     page_title="CyberGuard AI",
@@ -39,7 +49,27 @@ elif module == "Threat Intelligence":
 
 elif module == "Log Analysis":
     st.header("Log Analysis")
-    st.write("Analyze security logs for suspicious activity.")
+    uploaded_file = st.file_uploader(
+        "Upload Log File",
+        type=["txt", "log"]
+    )
+
+    if uploaded_file:
+        log_content = uploaded_file.read().decode("utf-8")
+        
+
+        if st.button("Analyze Logs"):
+            results = analyze_logs(log_content)
+
+            if results:
+                st.subheader("Findings")
+
+                for result in results:
+                    st.error(result)
+            else:
+                st.success("No suspicious activity found")
+
+    
 
 elif module == "Network Monitor":
     st.header("Network Monitoring")
@@ -48,3 +78,4 @@ elif module == "Network Monitor":
 elif module == "Security Reports":
     st.header("Security Reports")
     st.write("Generate automated cybersecurity reports.")
+

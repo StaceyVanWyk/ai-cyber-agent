@@ -1,2 +1,33 @@
 Ollama Open AI model
 My CPU - Memory to low or still need to find away to fix the problem.
+
+# Error Log
+
+## 2026-07-03
+
+### Fixed
+- Python not found
+- pip not recognized
+- PowerShell execution policy issue
+- Streamlit set_page_config error
+
+### Lessons Learned
+- Always activate venv
+- Save files before running Streamlit
+
+Ollama Issue
+------------
+Status: Blocked
+
+Error:
+CUDA error: device kernel image is invalid
+
+Environment:
+- RTX 3050
+- Driver 546.18
+- Ollama 0.31.1
+
+Future Fixes:
+[ ] Update NVIDIA Driver
+[ ] Reinstall Ollama
+[ ] Retest llama3.2:1b
