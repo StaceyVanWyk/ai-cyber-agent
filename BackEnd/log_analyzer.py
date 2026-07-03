@@ -3,10 +3,10 @@ def analyze_logs(log_content):
     findings = []
 
     failed_keywords = [
-        "failed",
-        "invalid password",
         "authentication failed",
-        "login failed"
+        "invalid password",
+        "login failed",
+        "failed"
     ]
 
     lines = log_content.split("\n")
@@ -18,7 +18,9 @@ def analyze_logs(log_content):
             if keyword.lower() in line.lower():
 
                 findings.append(
-                    f"Failed Login Detected: {line}"
+                    f"🚨 Failed Login Detected: {line}"
                 )
+
+                break
 
     return findings
