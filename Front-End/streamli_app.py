@@ -8,7 +8,10 @@ project_root = os.path.abspath(
 sys.path.append(project_root)
 
 import streamlit as st
-from BackEnd.log_analyzer import analyze_logs
+from BackEnd.log_analyzer import (
+    analyze_logs,
+    brute_force_detection
+)
 
 st.set_page_config(
     page_title="CyberGuard AI",
@@ -63,6 +66,7 @@ elif module == "Log Analysis":
         if st.button("Analyze Logs"):
 
             results = analyze_logs(log_content)
+            brute_force = brute_force_detection(log_content)
 
             threat_count = len(results)
 
@@ -155,6 +159,36 @@ elif module == "Log Analysis":
                 - No action required
                 - Continue normal monitoring
                 """)
+            #Display Brute Force Detection Results
+            st.subheader("Brute Force Analysis")  
+
+            if brute_force["detected"]:
+                st.error(
+                    f"""
+                🚨 Possible Brute Force Attack Detected
+                Failed Attempts: {brute_force["attempts"]}
+                Risk Level: {brute_force["risk"]}
+                """
+                )
+                
+            elif brute_force["risk"] == "MEDIUM":
+             st.warning(
+        f"""
+        ⚠️ Elevated Failed Login Activity
+
+        Failed Attempts: {brute_force['attempts']}
+
+        Risk Level: MEDIUM
+        """
+    )  
+            else:
+                st.success(
+                    f"""
+                ✅ No Brute Force Attack Detected
+                Failed Attempts: {brute_force["attempts"]}
+                Risk Level: {brute_force["risk"]}
+                """
+                )
     
 
 elif module == "Network Monitor":
