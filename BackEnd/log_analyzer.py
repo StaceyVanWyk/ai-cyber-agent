@@ -1,6 +1,7 @@
 def analyze_logs(log_content):
 
     findings = []
+    seen_lines = set()
 
     failed_keywords = [
         "authentication failed",
@@ -17,9 +18,11 @@ def analyze_logs(log_content):
 
             if keyword.lower() in line.lower():
 
-                findings.append(
-                    f"🚨 Failed Login Detected: {line}"
-                )
+                if line not in seen_lines:
+                    findings.append(
+                        f"🚨 Failed Login Detected: {line}"
+                    )
+                    seen_lines.add(line)
 
                 break
 
