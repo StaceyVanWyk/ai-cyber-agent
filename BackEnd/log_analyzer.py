@@ -19,9 +19,11 @@ def analyze_logs(log_content):
             if keyword.lower() in line.lower():
 
                 if line not in seen_lines:
+
                     findings.append(
                         f"🚨 Failed Login Detected: {line}"
                     )
+
                     seen_lines.add(line)
 
                 break
