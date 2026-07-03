@@ -1,0 +1,2 @@
+Ollama Open AI model
+My CPU - Memory to low or still need to find away to fix the problem.
