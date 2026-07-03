@@ -16,6 +16,9 @@ from BackEnd.log_analyzer import (
     brute_force_detection
 )
 
+from BackEnd.report_generator import generate_report
+    
+
 st.set_page_config(
     page_title="CyberGuard AI",
     page_icon="🛡️",
@@ -122,7 +125,7 @@ if module == "Dashboard":
         st.subheader("Threat Type Distribution")
         st.plotly_chart(pie_chart, width="stretch")
 
-        
+
     #Risk Distribution Chart
     risk_data = pd.DataFrame({
         "Risk": ["Low", "Medium", "High"],
@@ -289,6 +292,34 @@ elif module == "Log Analysis":
                 Risk Level: {brute_force["risk"]}
                 """
                 )
+    st.subheader("Incident Report ")
+
+    if st.button("Generate Incident Report"):
+        results = analyze_logs(log_content)
+        brute_force = brute_force_detection(log_content)
+
+        threat_count = len(results)
+
+        if threat_count >= 5:
+         risk_level = "HIGH"
+        elif threat_count >= 3:
+         risk_level = "MEDIUM"
+        elif threat_count > 0:
+            risk_level = "LOW"
+        else:
+            risk_level = "NONE"
+
+        generate_report(
+            "incident_report.pdf",
+            threat_count,
+            risk_level,
+            results,
+            brute_force
+        )
+
+        st.success(
+            "Incident report generated successfully!"
+        )
     
 
 elif module == "Network Monitor":

@@ -76,3 +76,5 @@ def brute_force_detection(log_content):
             "attempts": failed_attempts,
             "risk": "LOW"
         }
+    
+    
